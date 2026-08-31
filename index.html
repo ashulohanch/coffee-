@@ -1,0 +1,1906 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ONE CUP OF COFFEE — One Cup. One Moment. One Story.</title>
+<meta name="description" content="One Cup of Coffee — a premium café brand. Freshly brewed coffee, handcrafted moments, and a cozy place to slow down.">
+
+<!-- Google Fonts: Fraunces (serif, characterful headings) + Manrope (clean sans body) -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+/* ==========================================================================
+   0. ROOT VARIABLES — BRAND TOKENS
+   ========================================================================== */
+:root{
+  --espresso: #3B2418;
+  --dark-coffee: #24140E;
+  --cream: #FFF8ED;
+  --beige: #D8B892;
+  --caramel: #B87945;
+  --gold: #C9A66B;
+  --white: #FFFFFF;
+
+  --font-display: 'Fraunces', serif;
+  --font-body: 'Manrope', sans-serif;
+
+  --radius-sm: 10px;
+  --radius-md: 18px;
+  --radius-lg: 28px;
+
+  --shadow-soft: 0 20px 50px -20px rgba(36, 20, 14, 0.35);
+  --shadow-card: 0 10px 30px -12px rgba(36, 20, 14, 0.25);
+
+  --ease: cubic-bezier(.22,1,.36,1);
+}
+
+/* ==========================================================================
+   1. RESET & BASE
+   ========================================================================== */
+*, *::before, *::after{ box-sizing: border-box; margin:0; padding:0; }
+html{ scroll-behavior: smooth; }
+body{
+  font-family: var(--font-body);
+  background: var(--cream);
+  color: var(--espresso);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+img{ max-width: 100%; display: block; }
+a{ text-decoration: none; color: inherit; }
+ul{ list-style: none; }
+button{ font-family: inherit; cursor: pointer; border: none; background: none; }
+input, textarea{ font-family: inherit; }
+
+::selection{ background: var(--caramel); color: var(--white); }
+
+/* subtle grain / warmth overlay used across dark sections */
+.grain{
+  position: absolute; inset: 0;
+  background-image: radial-gradient(circle at 1px 1px, rgba(255,255,255,0.035) 1px, transparent 0);
+  background-size: 3px 3px;
+  pointer-events: none;
+}
+
+.container{
+  width: 100%;
+  max-width: 1220px;
+  margin: 0 auto;
+  padding: 0 32px;
+}
+
+.eyebrow{
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--caramel);
+  font-weight: 700;
+  margin-bottom: 18px;
+}
+.eyebrow::before{
+  content: "";
+  width: 26px; height: 1px;
+  background: var(--caramel);
+}
+
+.section-title{
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(2rem, 4vw, 3rem);
+  color: var(--dark-coffee);
+  letter-spacing: -0.01em;
+  line-height: 1.15;
+}
+
+.section-sub{
+  max-width: 560px;
+  color: #6b5142;
+  font-size: 1.02rem;
+  margin-top: 14px;
+}
+
+.section-head{
+  margin-bottom: 56px;
+}
+.section-head.center{
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+.section-head.center .section-sub{ margin-left: auto; margin-right: auto; }
+
+section{ position: relative; }
+
+/* Buttons */
+.btn{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 16px 34px;
+  border-radius: 100px;
+  font-weight: 700;
+  font-size: 0.92rem;
+  letter-spacing: 0.02em;
+  transition: transform .45s var(--ease), box-shadow .45s var(--ease), background .35s ease, color .35s ease;
+  white-space: nowrap;
+}
+.btn-primary{
+  background: linear-gradient(135deg, var(--caramel), var(--gold));
+  color: var(--white);
+  box-shadow: 0 12px 30px -10px rgba(184, 121, 69, 0.65);
+}
+.btn-primary:hover{
+  transform: translateY(-3px);
+  box-shadow: 0 18px 36px -10px rgba(184, 121, 69, 0.8);
+}
+.btn-outline{
+  background: transparent;
+  border: 1.5px solid var(--espresso);
+  color: var(--espresso);
+}
+.btn-outline:hover{
+  background: var(--espresso);
+  color: var(--cream);
+  transform: translateY(-3px);
+}
+.btn-light{
+  background: var(--cream);
+  color: var(--dark-coffee);
+}
+.btn-light:hover{
+  background: var(--white);
+  transform: translateY(-3px);
+  box-shadow: 0 14px 30px -12px rgba(0,0,0,0.3);
+}
+.btn-sm{ padding: 11px 24px; font-size: 0.82rem; }
+
+/* Scroll reveal base */
+.reveal{
+  opacity: 0;
+  transform: translateY(36px);
+  transition: opacity .9s var(--ease), transform .9s var(--ease);
+  will-change: transform, opacity;
+}
+.reveal.in-view{
+  opacity: 1;
+  transform: translateY(0);
+}
+.reveal-delay-1{ transition-delay: .1s; }
+.reveal-delay-2{ transition-delay: .2s; }
+.reveal-delay-3{ transition-delay: .3s; }
+.reveal-delay-4{ transition-delay: .4s; }
+
+/* ==========================================================================
+   2. NAVIGATION
+   ========================================================================== */
+.navbar{
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 1000;
+  padding: 22px 0;
+  transition: all .5s var(--ease);
+}
+.navbar.scrolled{
+  padding: 12px 0;
+  background: rgba(255, 248, 237, 0.88);
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  box-shadow: 0 8px 30px -16px rgba(36,20,14,0.25);
+}
+.nav-inner{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.logo{
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--font-display);
+  line-height: 1.05;
+  transition: color .4s ease;
+}
+.logo-icon{
+  font-size: 1.6rem;
+  transform: translateY(-1px);
+}
+.logo-text{
+  font-weight: 700;
+  font-size: 1.02rem;
+  letter-spacing: 0.03em;
+  color: var(--dark-coffee);
+}
+.logo-text span{
+  display: block;
+  font-size: 0.66rem;
+  font-family: var(--font-body);
+  font-weight: 700;
+  letter-spacing: 0.28em;
+  color: var(--caramel);
+  margin-top: 2px;
+}
+
+.nav-links{
+  display: flex;
+  align-items: center;
+  gap: 38px;
+}
+.nav-links a{
+  position: relative;
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--espresso);
+  padding: 6px 0;
+  transition: color .3s ease;
+}
+.nav-links a::after{
+  content: "";
+  position: absolute;
+  left: 0; bottom: 0;
+  width: 0; height: 2px;
+  background: var(--caramel);
+  transition: width .35s var(--ease);
+  border-radius: 2px;
+}
+.nav-links a:hover::after,
+.nav-links a.active::after{ width: 100%; }
+.nav-links a.active{ color: var(--caramel); }
+
+.nav-cta{ display: flex; align-items: center; gap: 18px; }
+
+.hamburger{
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  width: 30px;
+  z-index: 1200;
+}
+.hamburger span{
+  display: block;
+  height: 2px;
+  background: var(--dark-coffee);
+  border-radius: 2px;
+  transition: all .4s var(--ease);
+}
+.hamburger.open span:nth-child(1){ transform: translateY(7px) rotate(45deg); }
+.hamburger.open span:nth-child(2){ opacity: 0; }
+.hamburger.open span:nth-child(3){ transform: translateY(-7px) rotate(-45deg); }
+
+.mobile-menu{
+  position: fixed;
+  inset: 0;
+  background: var(--dark-coffee);
+  z-index: 1100;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transform: translateY(-100%);
+  transition: transform .55s var(--ease);
+}
+.mobile-menu.open{ transform: translateY(0); }
+.mobile-menu a{
+  color: var(--cream);
+  font-family: var(--font-display);
+  font-size: 1.7rem;
+  padding: 14px 0;
+  font-weight: 500;
+  opacity: 0.9;
+  transition: opacity .3s ease, letter-spacing .3s ease;
+}
+.mobile-menu a:hover{ opacity: 1; letter-spacing: 0.02em; color: var(--gold); }
+.mobile-menu .btn{ margin-top: 24px; }
+
+/* ==========================================================================
+   3. HERO
+   ========================================================================== */
+.hero{
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  background:
+    linear-gradient(180deg, rgba(36,20,14,0.35) 0%, rgba(36,20,14,0.78) 78%, var(--dark-coffee) 100%),
+    url('https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=1920&q=80') center 60%/cover no-repeat;
+}
+.hero::after{
+  content:"";
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at 30% 20%, rgba(201,166,107,0.18), transparent 55%);
+  pointer-events: none;
+}
+.hero-inner{
+  position: relative;
+  z-index: 2;
+  padding-top: 90px;
+  max-width: 760px;
+}
+.hero-eyebrow{
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--gold);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  margin-bottom: 26px;
+  opacity: 0;
+  animation: fadeUp 1s var(--ease) .2s forwards;
+}
+.hero-eyebrow .line{ width: 40px; height: 1px; background: var(--gold); }
+
+.hero h1{
+  font-family: var(--font-display);
+  font-weight: 600;
+  color: var(--white);
+  font-size: clamp(2.6rem, 6.2vw, 5rem);
+  line-height: 1.08;
+  letter-spacing: -0.01em;
+  opacity: 0;
+  animation: fadeUp 1s var(--ease) .4s forwards;
+}
+.hero h1 em{
+  font-style: italic;
+  color: var(--gold);
+  font-weight: 500;
+}
+.hero p.sub{
+  margin-top: 26px;
+  max-width: 520px;
+  color: rgba(255,248,237,0.86);
+  font-size: 1.12rem;
+  opacity: 0;
+  animation: fadeUp 1s var(--ease) .6s forwards;
+}
+.hero-buttons{
+  margin-top: 42px;
+  display: flex;
+  gap: 18px;
+  flex-wrap: wrap;
+  opacity: 0;
+  animation: fadeUp 1s var(--ease) .8s forwards;
+}
+.hero-tags{
+  margin-top: 56px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-size: 0.82rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255,248,237,0.65);
+  font-weight: 600;
+  opacity: 0;
+  animation: fadeUp 1s var(--ease) 1s forwards;
+}
+.hero-tags .dot{ width: 4px; height: 4px; border-radius: 50%; background: var(--gold); }
+
+@keyframes fadeUp{
+  from{ opacity: 0; transform: translateY(26px); }
+  to{ opacity: 1; transform: translateY(0); }
+}
+
+.scroll-cue{
+  position: absolute;
+  bottom: 34px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  color: rgba(255,248,237,0.7);
+  font-size: 0.7rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+}
+.scroll-cue .stick{
+  width: 1px; height: 40px;
+  background: linear-gradient(180deg, var(--gold), transparent);
+  position: relative;
+  overflow: hidden;
+}
+.scroll-cue .stick::after{
+  content:"";
+  position: absolute;
+  top: -40px; left: 0; width: 100%; height: 40px;
+  background: linear-gradient(180deg, transparent, var(--white));
+  animation: dropline 2.2s ease-in-out infinite;
+}
+@keyframes dropline{
+  0%{ transform: translateY(0); }
+  100%{ transform: translateY(80px); }
+}
+
+/* ==========================================================================
+   4. ABOUT
+   ========================================================================== */
+.about{
+  padding: 140px 0 110px;
+  background: var(--cream);
+}
+.about-grid{
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  gap: 80px;
+  align-items: center;
+}
+.about-visual{
+  position: relative;
+}
+.about-visual img{
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-soft);
+  width: 100%;
+  height: 520px;
+  object-fit: cover;
+}
+.about-badge{
+  position: absolute;
+  bottom: -30px;
+  right: -30px;
+  background: var(--dark-coffee);
+  color: var(--cream);
+  border-radius: 50%;
+  width: 130px; height: 130px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  line-height: 1.3;
+  box-shadow: var(--shadow-card);
+  animation: spin-slow 18s linear infinite;
+}
+.about-badge span{ display: block; font-size: 1.7rem; font-weight: 700; color: var(--gold); animation: none; }
+@keyframes spin-slow{ from{ transform: rotate(0deg); } to{ transform: rotate(360deg); } }
+.about-badge b{ display:block; }
+
+.about-text p{
+  color: #5a4437;
+  font-size: 1.04rem;
+  margin-bottom: 18px;
+  max-width: 520px;
+}
+.about-features{
+  margin-top: 40px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+}
+.feature-mini{
+  padding: 26px 20px;
+  background: var(--white);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-card);
+  transition: transform .45s var(--ease), box-shadow .45s var(--ease);
+}
+.feature-mini:hover{
+  transform: translateY(-8px);
+  box-shadow: 0 22px 40px -18px rgba(36,20,14,0.3);
+}
+.feature-mini .ico{ font-size: 1.6rem; margin-bottom: 14px; display:block; }
+.feature-mini h4{
+  font-family: var(--font-display);
+  font-size: 1.02rem;
+  margin-bottom: 8px;
+  color: var(--dark-coffee);
+}
+.feature-mini p{
+  font-size: 0.86rem;
+  color: #7a6250;
+  margin: 0;
+}
+
+/* ==========================================================================
+   5. MENU
+   ========================================================================== */
+.menu-section{
+  padding: 120px 0;
+  background: var(--white);
+  position: relative;
+}
+.filter-bar{
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 56px;
+}
+.filter-btn{
+  padding: 12px 26px;
+  border-radius: 100px;
+  border: 1.5px solid var(--beige);
+  color: var(--espresso);
+  font-weight: 700;
+  font-size: 0.85rem;
+  letter-spacing: 0.02em;
+  transition: all .35s var(--ease);
+  background: transparent;
+}
+.filter-btn:hover{ border-color: var(--caramel); color: var(--caramel); }
+.filter-btn.active{
+  background: var(--espresso);
+  border-color: var(--espresso);
+  color: var(--cream);
+}
+
+.menu-category{
+  margin-bottom: 62px;
+}
+.menu-category-title{
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: var(--caramel);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 28px;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+.menu-category-title::after{
+  content:"";
+  flex: 1;
+  height: 1px;
+  background: var(--beige);
+}
+
+.menu-grid{
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px 44px;
+}
+.menu-item{
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 14px;
+  padding: 18px 0;
+  border-bottom: 1px dashed rgba(59,36,24,0.18);
+  transition: opacity .5s ease, transform .5s ease;
+}
+.menu-item.hidden{ display: none; }
+.menu-item-name{
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.08rem;
+  color: var(--dark-coffee);
+  position: relative;
+}
+.menu-item-desc{
+  display: block;
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: 0.8rem;
+  color: #97806e;
+  margin-top: 3px;
+}
+.menu-item-price{
+  font-weight: 800;
+  color: var(--caramel);
+  font-size: 1rem;
+  white-space: nowrap;
+}
+
+/* ==========================================================================
+   6. SPECIALTY / BEST SELLERS
+   ========================================================================== */
+.specialty{
+  padding: 120px 0;
+  background: var(--cream);
+}
+.specialty-grid{
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+}
+.specialty-card{
+  background: var(--white);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-card);
+  transition: transform .55s var(--ease), box-shadow .55s var(--ease);
+  position: relative;
+}
+.specialty-card:hover{
+  transform: translateY(-12px);
+  box-shadow: 0 30px 50px -20px rgba(36,20,14,0.35);
+}
+.specialty-img{
+  height: 260px;
+  overflow: hidden;
+  position: relative;
+}
+.specialty-img img{
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transition: transform .8s var(--ease);
+}
+.specialty-card:hover .specialty-img img{ transform: scale(1.1); }
+.specialty-tag{
+  position: absolute;
+  top: 18px; left: 18px;
+  background: rgba(255,248,237,0.92);
+  color: var(--caramel);
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 7px 14px;
+  border-radius: 100px;
+}
+.specialty-body{ padding: 30px 28px 32px; }
+.specialty-body h3{
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  margin-bottom: 12px;
+  color: var(--dark-coffee);
+}
+.specialty-body p{
+  color: #7a6250;
+  font-size: 0.92rem;
+  margin-bottom: 22px;
+  min-height: 66px;
+}
+
+/* ==========================================================================
+   7. WHY CHOOSE US
+   ========================================================================== */
+.why{
+  padding: 130px 0;
+  background: var(--dark-coffee);
+  color: var(--cream);
+  position: relative;
+  overflow: hidden;
+}
+.why::before{
+  content:"";
+  position: absolute;
+  width: 520px; height: 520px;
+  background: radial-gradient(circle, rgba(201,166,107,0.15), transparent 70%);
+  top: -160px; right: -160px;
+  border-radius: 50%;
+}
+.why .section-title, .why .eyebrow{ color: var(--cream); }
+.why .eyebrow{ color: var(--gold); }
+.why .eyebrow::before{ background: var(--gold); }
+.why-grid{
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 26px;
+  position: relative;
+  z-index: 1;
+}
+.why-card{
+  padding: 40px 26px;
+  border: 1px solid rgba(255,248,237,0.14);
+  border-radius: var(--radius-md);
+  background: rgba(255,248,237,0.03);
+  transition: all .5s var(--ease);
+}
+.why-card:hover{
+  background: rgba(201,166,107,0.1);
+  border-color: rgba(201,166,107,0.4);
+  transform: translateY(-8px);
+}
+.why-card .ico{
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+  display: block;
+}
+.why-card h4{
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  margin-bottom: 10px;
+}
+.why-card p{
+  font-size: 0.87rem;
+  color: rgba(255,248,237,0.65);
+}
+
+/* ==========================================================================
+   8. GALLERY
+   ========================================================================== */
+.gallery{
+  padding: 120px 0;
+  background: var(--white);
+}
+.gallery-grid{
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-auto-rows: 130px;
+  gap: 16px;
+}
+.gallery-item{
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+}
+.gallery-item:nth-child(1){ grid-column: span 3; grid-row: span 3; }
+.gallery-item:nth-child(2){ grid-column: span 3; grid-row: span 2; }
+.gallery-item:nth-child(3){ grid-column: span 3; grid-row: span 2; }
+.gallery-item:nth-child(4){ grid-column: span 3; grid-row: span 3; }
+.gallery-item:nth-child(5){ grid-column: span 3; grid-row: span 2; }
+.gallery-item:nth-child(6){ grid-column: span 3; grid-row: span 2; }
+
+.gallery-item img{
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transition: transform .7s var(--ease), filter .5s ease;
+}
+.gallery-item::after{
+  content: attr(data-label);
+  position: absolute;
+  left: 20px; bottom: 18px;
+  color: var(--white);
+  font-family: var(--font-display);
+  font-size: 1rem;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: all .45s var(--ease);
+  z-index: 2;
+}
+.gallery-item::before{
+  content:"";
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg, transparent 40%, rgba(36,20,14,0.75));
+  opacity: 0;
+  transition: opacity .45s ease;
+  z-index: 1;
+}
+.gallery-item:hover::before, .gallery-item:hover::after{ opacity: 1; transform: translateY(0); }
+.gallery-item:hover img{ transform: scale(1.12); }
+
+/* ==========================================================================
+   9. REVIEWS
+   ========================================================================== */
+.reviews{
+  padding: 130px 0;
+  background: var(--beige);
+  position: relative;
+}
+.reviews .section-title, .reviews .section-sub{ color: var(--dark-coffee); }
+.reviews .section-sub{ color: #5a4130; }
+
+.testimonial-wrap{
+  max-width: 720px;
+  margin: 0 auto;
+  position: relative;
+}
+.testimonial-track{
+  overflow: hidden;
+}
+.testimonial-slides{
+  display: flex;
+  transition: transform .7s var(--ease);
+}
+.testimonial-slide{
+  min-width: 100%;
+  text-align: center;
+  padding: 12px 30px;
+}
+.stars{
+  color: var(--gold);
+  font-size: 1.2rem;
+  letter-spacing: 4px;
+  margin-bottom: 26px;
+}
+.testimonial-slide p{
+  font-family: var(--font-display);
+  font-size: clamp(1.2rem, 2.4vw, 1.6rem);
+  font-style: italic;
+  color: var(--dark-coffee);
+  line-height: 1.5;
+  margin-bottom: 26px;
+}
+.testimonial-author{
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-size: 0.82rem;
+  color: var(--caramel);
+}
+.testimonial-nav{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 22px;
+  margin-top: 40px;
+}
+.t-arrow{
+  width: 46px; height: 46px;
+  border-radius: 50%;
+  border: 1.5px solid var(--dark-coffee);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.1rem;
+  transition: all .35s ease;
+}
+.t-arrow:hover{ background: var(--dark-coffee); color: var(--cream); }
+.t-dots{ display: flex; gap: 10px; }
+.t-dot{
+  width: 9px; height: 9px;
+  border-radius: 50%;
+  background: rgba(36,20,14,0.25);
+  transition: all .35s ease;
+}
+.t-dot.active{ background: var(--dark-coffee); width: 26px; border-radius: 6px; }
+
+/* ==========================================================================
+   10. SPECIAL OFFER
+   ========================================================================== */
+.offer{
+  padding: 110px 0;
+  background: linear-gradient(120deg, var(--espresso), var(--dark-coffee));
+  color: var(--cream);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.offer::before{
+  content: "☕";
+  position: absolute;
+  font-size: 22rem;
+  opacity: 0.04;
+  top: -80px;
+  left: -60px;
+  transform: rotate(-12deg);
+}
+.offer-inner{ position: relative; z-index: 1; max-width: 640px; margin: 0 auto; }
+.offer .eyebrow{ color: var(--gold); justify-content: center; }
+.offer .eyebrow::before{ display: none; }
+.offer h2{
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4.5vw, 3.2rem);
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+.offer p{
+  color: rgba(255,248,237,0.8);
+  font-size: 1.08rem;
+  margin-bottom: 36px;
+}
+.offer small{
+  display: block;
+  margin-top: 20px;
+  color: rgba(255,248,237,0.55);
+  font-size: 0.8rem;
+  letter-spacing: 0.05em;
+}
+
+/* ==========================================================================
+   11. CONTACT
+   ========================================================================== */
+.contact{
+  padding: 130px 0;
+  background: var(--cream);
+}
+.contact-grid{
+  display: grid;
+  grid-template-columns: 0.85fr 1.15fr;
+  gap: 70px;
+}
+.contact-info-list{
+  margin-top: 34px;
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
+}
+.info-item{
+  display: flex;
+  align-items: flex-start;
+  gap: 18px;
+}
+.info-item .ico{
+  font-size: 1.3rem;
+  width: 52px; height: 52px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: var(--white);
+  box-shadow: var(--shadow-card);
+  display: flex; align-items: center; justify-content: center;
+}
+.info-item h4{
+  font-family: var(--font-display);
+  font-size: 1.02rem;
+  margin-bottom: 4px;
+  color: var(--dark-coffee);
+}
+.info-item p{ color: #6b5142; font-size: 0.92rem; }
+.info-item a{ color: #6b5142; }
+.info-item a:hover{ color: var(--caramel); }
+
+.contact-form{
+  background: var(--white);
+  padding: 46px;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-soft);
+}
+.form-row{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+.field{
+  margin-bottom: 22px;
+  position: relative;
+}
+.field label{
+  display: block;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--espresso);
+  margin-bottom: 8px;
+}
+.field input, .field textarea{
+  width: 100%;
+  padding: 14px 16px;
+  border-radius: var(--radius-sm);
+  border: 1.5px solid rgba(59,36,24,0.18);
+  background: var(--cream);
+  font-size: 0.95rem;
+  color: var(--espresso);
+  transition: border-color .3s ease, box-shadow .3s ease;
+}
+.field textarea{ resize: vertical; min-height: 120px; }
+.field input:focus, .field textarea:focus{
+  outline: none;
+  border-color: var(--caramel);
+  box-shadow: 0 0 0 4px rgba(184,121,69,0.14);
+}
+.field .error-msg{
+  display: none;
+  color: #a3372c;
+  font-size: 0.76rem;
+  margin-top: 6px;
+  font-weight: 600;
+}
+.field.error input, .field.error textarea{ border-color: #a3372c; }
+.field.error .error-msg{ display: block; }
+
+.form-status{
+  margin-top: 6px;
+  padding: 14px 18px;
+  border-radius: var(--radius-sm);
+  font-size: 0.9rem;
+  font-weight: 600;
+  display: none;
+}
+.form-status.show{ display: block; animation: fadeUp .5s var(--ease); }
+.form-status.success{ background: rgba(90,140,90,0.14); color: #35603a; }
+.form-status.fail{ background: rgba(163,55,44,0.1); color: #a3372c; }
+
+/* ==========================================================================
+   12. NEWSLETTER
+   ========================================================================== */
+.newsletter{
+  padding: 90px 0;
+  background: var(--caramel);
+  color: var(--white);
+  text-align: center;
+}
+.newsletter h2{
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 3.6vw, 2.6rem);
+  margin-bottom: 14px;
+}
+.newsletter p{
+  max-width: 480px;
+  margin: 0 auto 34px;
+  color: rgba(255,255,255,0.88);
+}
+.newsletter-form{
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  max-width: 480px;
+  margin: 0 auto;
+  flex-wrap: wrap;
+}
+.newsletter-form input{
+  flex: 1;
+  min-width: 220px;
+  padding: 16px 22px;
+  border-radius: 100px;
+  border: none;
+  font-size: 0.95rem;
+}
+.newsletter-form input:focus{ outline: 3px solid rgba(255,255,255,0.4); }
+.newsletter-msg{
+  margin-top: 18px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: all .4s var(--ease);
+}
+.newsletter-msg.show{ opacity: 1; transform: translateY(0); }
+
+/* ==========================================================================
+   13. FOOTER
+   ========================================================================== */
+footer{
+  background: var(--dark-coffee);
+  color: rgba(255,248,237,0.7);
+  padding: 80px 0 0;
+}
+.footer-grid{
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr;
+  gap: 60px;
+  padding-bottom: 60px;
+  border-bottom: 1px solid rgba(255,248,237,0.1);
+}
+.footer-brand .logo-text{ color: var(--cream); }
+.footer-brand p.tag{
+  font-family: var(--font-display);
+  font-style: italic;
+  color: var(--gold);
+  margin-top: 18px;
+  font-size: 1.02rem;
+}
+.footer-brand p.desc{
+  margin-top: 16px;
+  font-size: 0.9rem;
+  max-width: 320px;
+  color: rgba(255,248,237,0.55);
+}
+.footer-col h4{
+  font-family: var(--font-display);
+  color: var(--cream);
+  font-size: 1rem;
+  margin-bottom: 22px;
+}
+.footer-col ul{ display: flex; flex-direction: column; gap: 13px; }
+.footer-col a{
+  font-size: 0.9rem;
+  transition: color .3s ease, padding-left .3s ease;
+}
+.footer-col a:hover{ color: var(--gold); padding-left: 4px; }
+
+.social-row{ display: flex; gap: 14px; margin-top: 6px; }
+.social-row a{
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  border: 1px solid rgba(255,248,237,0.2);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.05rem;
+  transition: all .35s var(--ease);
+}
+.social-row a:hover{
+  background: var(--gold);
+  border-color: var(--gold);
+  color: var(--dark-coffee);
+  transform: translateY(-4px);
+}
+
+.footer-bottom{
+  padding: 26px 0;
+  text-align: center;
+  font-size: 0.82rem;
+  color: rgba(255,248,237,0.4);
+}
+
+/* ==========================================================================
+   14. BACK TO TOP
+   ========================================================================== */
+.back-to-top{
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+  width: 52px; height: 52px;
+  border-radius: 50%;
+  background: var(--espresso);
+  color: var(--cream);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.2rem;
+  box-shadow: var(--shadow-card);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(14px);
+  transition: all .4s var(--ease);
+  z-index: 900;
+}
+.back-to-top.show{ opacity: 1; visibility: visible; transform: translateY(0); }
+.back-to-top:hover{ background: var(--caramel); transform: translateY(-5px); }
+
+/* toast for order buttons */
+.toast{
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background: var(--dark-coffee);
+  color: var(--cream);
+  padding: 16px 30px;
+  border-radius: 100px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  box-shadow: var(--shadow-soft);
+  opacity: 0;
+  visibility: hidden;
+  transition: all .45s var(--ease);
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.toast.show{ opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0); }
+
+/* ==========================================================================
+   15. RESPONSIVE
+   ========================================================================== */
+@media (max-width: 980px){
+  .nav-links{ display: none; }
+  .nav-cta .btn-outline-desktop{ display:none; }
+  .hamburger{ display: flex; }
+
+  .about-grid{ grid-template-columns: 1fr; gap: 50px; }
+  .about-visual img{ height: 400px; }
+  .about-badge{ right: 10px; }
+
+  .specialty-grid{ grid-template-columns: 1fr 1fr; }
+  .why-grid{ grid-template-columns: 1fr 1fr; }
+
+  .gallery-grid{ grid-template-columns: repeat(4, 1fr); grid-auto-rows: 120px; }
+  .gallery-item:nth-child(n){ grid-column: span 2; grid-row: span 2; }
+
+  .contact-grid{ grid-template-columns: 1fr; gap: 50px; }
+  .footer-grid{ grid-template-columns: 1fr 1fr; }
+}
+
+@media (max-width: 720px){
+  .container{ padding: 0 22px; }
+  .about-features{ grid-template-columns: 1fr; }
+  .menu-grid{ grid-template-columns: 1fr; }
+  .specialty-grid{ grid-template-columns: 1fr; }
+  .why-grid{ grid-template-columns: 1fr; }
+  .gallery-grid{ grid-template-columns: repeat(2, 1fr); }
+  .form-row{ grid-template-columns: 1fr; }
+  .footer-grid{ grid-template-columns: 1fr; gap: 40px; }
+  .hero-buttons{ flex-direction: column; align-items: flex-start; }
+  .hero-buttons .btn{ width: 100%; }
+}
+
+@media (prefers-reduced-motion: reduce){
+  *{ animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
+</style>
+</head>
+<body>
+
+<!-- =========================================================
+     NAVIGATION
+========================================================= -->
+<header class="navbar" id="navbar">
+  <div class="container nav-inner">
+    <a href="#home" class="logo">
+      <span class="logo-icon">☕</span>
+      <span class="logo-text">ONE CUP<span>OF COFFEE</span></span>
+    </a>
+
+    <nav class="nav-links" id="navLinks">
+      <a href="#home" class="active">Home</a>
+      <a href="#about">About</a>
+      <a href="#menu">Menu</a>
+      <a href="#specialty">Specialties</a>
+      <a href="#gallery">Gallery</a>
+      <a href="#reviews">Reviews</a>
+      <a href="#contact">Contact</a>
+    </nav>
+
+    <div class="nav-cta">
+      <a href="#menu" class="btn btn-primary btn-sm order-btn">Order Now</a>
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- Mobile fullscreen menu -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#home">Home</a>
+  <a href="#about">About</a>
+  <a href="#menu">Menu</a>
+  <a href="#specialty">Specialties</a>
+  <a href="#gallery">Gallery</a>
+  <a href="#reviews">Reviews</a>
+  <a href="#contact">Contact</a>
+  <a href="#menu" class="btn btn-primary order-btn">Order Now</a>
+</div>
+
+<!-- =========================================================
+     HERO
+========================================================= -->
+<section class="hero" id="home">
+  <div class="container hero-inner">
+    <div class="hero-eyebrow"><span class="line"></span> ONE CUP OF COFFEE</div>
+    <h1>Your Perfect Cup,<br>Made With <em>Love</em>.</h1>
+    <p class="sub">Freshly brewed coffee, handcrafted moments, and a cozy place to slow down.</p>
+    <div class="hero-buttons">
+      <a href="#menu" class="btn btn-primary">Explore Our Menu</a>
+      <a href="#contact" class="btn btn-outline" style="border-color:var(--cream); color:var(--cream);">Visit Us</a>
+    </div>
+    <div class="hero-tags">
+      <span>Freshly Roasted</span><span class="dot"></span>
+      <span>Handcrafted</span><span class="dot"></span>
+      <span>Served Warm</span>
+    </div>
+  </div>
+  <div class="scroll-cue"><span>Scroll</span><span class="stick"></span></div>
+</section>
+
+<!-- =========================================================
+     ABOUT
+========================================================= -->
+<section class="about" id="about">
+  <div class="container about-grid">
+    <div class="about-visual reveal">
+      <img src="https://images.unsplash.com/photo-1442512595331-e89e73853f31?auto=format&fit=crop&w=900&q=80" alt="Barista preparing coffee at One Cup of Coffee" loading="lazy">
+      <div class="about-badge"><span>10+</span><b>Years of<br>Craft</b></div>
+    </div>
+    <div class="about-text">
+      <div class="eyebrow reveal">Our Story</div>
+      <h2 class="section-title reveal">More Than Just Coffee</h2>
+      <p class="reveal reveal-delay-1" style="margin-top:22px;">At One Cup of Coffee, we believe coffee is more than a drink. It is a pause in a busy day, a conversation with someone special, and a little moment of happiness.</p>
+      <p class="reveal reveal-delay-2">From carefully selected coffee beans to beautifully handcrafted drinks, every cup is prepared with passion, warmth, and attention to detail.</p>
+
+      <div class="about-features">
+        <div class="feature-mini reveal reveal-delay-1">
+          <span class="ico">☕</span>
+          <h4>Freshly Brewed</h4>
+          <p>Premium coffee prepared fresh for every order.</p>
+        </div>
+        <div class="feature-mini reveal reveal-delay-2">
+          <span class="ico">🌱</span>
+          <h4>Quality Ingredients</h4>
+          <p>Carefully selected ingredients for better taste.</p>
+        </div>
+        <div class="feature-mini reveal reveal-delay-3">
+          <span class="ico">❤️</span>
+          <h4>Made With Love</h4>
+          <p>Every cup is served with warmth and care.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     SIGNATURE MENU
+========================================================= -->
+<section class="menu-section" id="menu">
+  <div class="container">
+    <div class="section-head center reveal">
+      <div class="eyebrow" style="justify-content:center;">The Menu</div>
+      <h2 class="section-title">Our Signature Menu</h2>
+      <p class="section-sub">Every item is crafted in-house, from bean to cup, with nothing rushed.</p>
+    </div>
+
+    <div class="filter-bar reveal">
+      <button class="filter-btn active" data-filter="all">All</button>
+      <button class="filter-btn" data-filter="coffee">Coffee</button>
+      <button class="filter-btn" data-filter="cold">Cold Drinks</button>
+      <button class="filter-btn" data-filter="desserts">Desserts</button>
+    </div>
+
+    <!-- COFFEE -->
+    <div class="menu-category" data-cat-group="coffee">
+      <h3 class="menu-category-title">Coffee</h3>
+      <div class="menu-grid">
+        <div class="menu-item" data-cat="coffee"><span class="menu-item-name">Espresso<span class="menu-item-desc">Bold & concentrated</span></span><span class="menu-item-price">Rs. 350</span></div>
+        <div class="menu-item" data-cat="coffee"><span class="menu-item-name">Americano<span class="menu-item-desc">Smooth, hot water diluted</span></span><span class="menu-item-price">Rs. 400</span></div>
+        <div class="menu-item" data-cat="coffee"><span class="menu-item-name">Cappuccino<span class="menu-item-desc">Espresso, milk & foam</span></span><span class="menu-item-price">Rs. 450</span></div>
+        <div class="menu-item" data-cat="coffee"><span class="menu-item-name">Café Latte<span class="menu-item-desc">Silky steamed milk</span></span><span class="menu-item-price">Rs. 450</span></div>
+        <div class="menu-item" data-cat="coffee"><span class="menu-item-name">Mocha<span class="menu-item-desc">Espresso & rich chocolate</span></span><span class="menu-item-price">Rs. 500</span></div>
+        <div class="menu-item" data-cat="coffee"><span class="menu-item-name">Caramel Macchiato<span class="menu-item-desc">Layered caramel espresso</span></span><span class="menu-item-price">Rs. 550</span></div>
+      </div>
+    </div>
+
+    <!-- SPECIALTY / COLD DRINKS -->
+    <div class="menu-category" data-cat-group="cold">
+      <h3 class="menu-category-title">Specialty Drinks</h3>
+      <div class="menu-grid">
+        <div class="menu-item" data-cat="cold"><span class="menu-item-name">Iced Caramel Latte<span class="menu-item-desc">Chilled & caramel-kissed</span></span><span class="menu-item-price">Rs. 550</span></div>
+        <div class="menu-item" data-cat="cold"><span class="menu-item-name">Iced Mocha<span class="menu-item-desc">Cold chocolate coffee</span></span><span class="menu-item-price">Rs. 550</span></div>
+        <div class="menu-item" data-cat="cold"><span class="menu-item-name">Vanilla Cold Coffee<span class="menu-item-desc">Sweet vanilla finish</span></span><span class="menu-item-price">Rs. 500</span></div>
+        <div class="menu-item" data-cat="cold"><span class="menu-item-name">Classic Cold Coffee<span class="menu-item-desc">Timeless & refreshing</span></span><span class="menu-item-price">Rs. 450</span></div>
+        <div class="menu-item" data-cat="cold"><span class="menu-item-name">Hazelnut Latte<span class="menu-item-desc">Nutty & aromatic</span></span><span class="menu-item-price">Rs. 550</span></div>
+      </div>
+    </div>
+
+    <!-- DESSERTS -->
+    <div class="menu-category" data-cat-group="desserts">
+      <h3 class="menu-category-title">Desserts</h3>
+      <div class="menu-grid">
+        <div class="menu-item" data-cat="desserts"><span class="menu-item-name">Chocolate Brownie<span class="menu-item-desc">Fudgy & rich</span></span><span class="menu-item-price">Rs. 350</span></div>
+        <div class="menu-item" data-cat="desserts"><span class="menu-item-name">Chocolate Cake<span class="menu-item-desc">Layered & moist</span></span><span class="menu-item-price">Rs. 400</span></div>
+        <div class="menu-item" data-cat="desserts"><span class="menu-item-name">Lotus Cheesecake<span class="menu-item-desc">Creamy & caramelized</span></span><span class="menu-item-price">Rs. 500</span></div>
+        <div class="menu-item" data-cat="desserts"><span class="menu-item-name">Chocolate Chip Cookie<span class="menu-item-desc">Warm & gooey</span></span><span class="menu-item-price">Rs. 250</span></div>
+        <div class="menu-item" data-cat="desserts"><span class="menu-item-name">Cinnamon Roll<span class="menu-item-desc">Soft, spiced swirl</span></span><span class="menu-item-price">Rs. 350</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     SPECIALTY / BEST SELLERS
+========================================================= -->
+<section class="specialty" id="specialty">
+  <div class="container">
+    <div class="section-head center reveal">
+      <div class="eyebrow" style="justify-content:center;">Best Sellers</div>
+      <h2 class="section-title">Made For Coffee Lovers</h2>
+      <p class="section-sub">The three cups our regulars simply can't go without.</p>
+    </div>
+
+    <div class="specialty-grid">
+      <div class="specialty-card reveal">
+        <div class="specialty-img">
+          <span class="specialty-tag">Best Seller</span>
+          <img src="https://images.unsplash.com/photo-1572442388796-11668a67e53d?auto=format&fit=crop&w=700&q=80" alt="Signature Cappuccino" loading="lazy">
+        </div>
+        <div class="specialty-body">
+          <h3>Signature Cappuccino</h3>
+          <p>Rich espresso, velvety milk foam and our signature coffee blend.</p>
+          <button class="btn btn-outline btn-sm order-btn">Order Now</button>
+        </div>
+      </div>
+
+      <div class="specialty-card reveal reveal-delay-1">
+        <div class="specialty-img">
+          <span class="specialty-tag">Fan Favorite</span>
+          <img src="https://images.unsplash.com/photo-1461023058943-07fcbe16d735?auto=format&fit=crop&w=700&q=80" alt="Caramel Latte" loading="lazy">
+        </div>
+        <div class="specialty-body">
+          <h3>Caramel Latte</h3>
+          <p>Smooth espresso blended with creamy milk and a touch of caramel.</p>
+          <button class="btn btn-outline btn-sm order-btn">Order Now</button>
+        </div>
+      </div>
+
+      <div class="specialty-card reveal reveal-delay-2">
+        <div class="specialty-img">
+          <span class="specialty-tag">Indulgent</span>
+          <img src="https://images.unsplash.com/photo-1541167760496-1628856ab772?auto=format&fit=crop&w=700&q=80" alt="Chocolate Mocha" loading="lazy">
+        </div>
+        <div class="specialty-body">
+          <h3>Chocolate Mocha</h3>
+          <p>Bold coffee, rich chocolate and silky milk in one indulgent cup.</p>
+          <button class="btn btn-outline btn-sm order-btn">Order Now</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     WHY CHOOSE US
+========================================================= -->
+<section class="why">
+  <div class="grain"></div>
+  <div class="container">
+    <div class="section-head center reveal">
+      <div class="eyebrow" style="justify-content:center;">Our Promise</div>
+      <h2 class="section-title">Why One Cup?</h2>
+      <p class="section-sub" style="color:rgba(255,248,237,0.65);">What sets every visit apart, cup after cup.</p>
+    </div>
+
+    <div class="why-grid">
+      <div class="why-card reveal reveal-delay-1">
+        <span class="ico">☕</span>
+        <h4>Premium Coffee</h4>
+        <p>Carefully selected beans and expertly brewed coffee.</p>
+      </div>
+      <div class="why-card reveal reveal-delay-2">
+        <span class="ico">✨</span>
+        <h4>Fresh Every Day</h4>
+        <p>Fresh ingredients and freshly prepared drinks.</p>
+      </div>
+      <div class="why-card reveal reveal-delay-3">
+        <span class="ico">🤎</span>
+        <h4>Cozy Experience</h4>
+        <p>A warm environment designed for relaxing moments.</p>
+      </div>
+      <div class="why-card reveal reveal-delay-4">
+        <span class="ico">🚀</span>
+        <h4>Fast Service</h4>
+        <p>Freshly prepared orders without unnecessary waiting.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     GALLERY
+========================================================= -->
+<section class="gallery" id="gallery">
+  <div class="container">
+    <div class="section-head center reveal">
+      <div class="eyebrow" style="justify-content:center;">Inside One Cup</div>
+      <h2 class="section-title">A Glimpse Of Our World</h2>
+      <p class="section-sub">Moments brewed, poured and shared.</p>
+    </div>
+
+    <div class="gallery-grid">
+      <div class="gallery-item reveal" data-label="Cappuccino Art">
+        <img src="https://images.unsplash.com/photo-1517701604599-bb29b565090c?auto=format&fit=crop&w=800&q=80" alt="Cappuccino with latte art" loading="lazy">
+      </div>
+      <div class="gallery-item reveal reveal-delay-1" data-label="Coffee Beans">
+        <img src="https://images.unsplash.com/photo-1447933601403-0c6688de566e?auto=format&fit=crop&w=800&q=80" alt="Fresh roasted coffee beans" loading="lazy">
+      </div>
+      <div class="gallery-item reveal reveal-delay-2" data-label="Latte Art">
+        <img src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=800&q=80" alt="Latte art close up" loading="lazy">
+      </div>
+      <div class="gallery-item reveal reveal-delay-1" data-label="Café Interior">
+        <img src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=800&q=80" alt="Cozy café interior" loading="lazy">
+      </div>
+      <div class="gallery-item reveal reveal-delay-3" data-label="Coffee & Dessert">
+        <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=800&q=80" alt="Coffee paired with dessert" loading="lazy">
+      </div>
+      <div class="gallery-item reveal reveal-delay-2" data-label="Iced Coffee">
+        <img src="https://images.unsplash.com/photo-1461023058943-07fcbe16d735?auto=format&fit=crop&w=800&q=80" alt="Iced coffee glass" loading="lazy">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     REVIEWS
+========================================================= -->
+<section class="reviews" id="reviews">
+  <div class="container">
+    <div class="section-head center reveal">
+      <div class="eyebrow" style="justify-content:center;">Testimonials</div>
+      <h2 class="section-title">Loved By Coffee Lovers</h2>
+    </div>
+
+    <div class="testimonial-wrap reveal">
+      <div class="testimonial-track">
+        <div class="testimonial-slides" id="testimonialSlides">
+          <div class="testimonial-slide">
+            <div class="stars">★★★★★</div>
+            <p>“Absolutely loved the cappuccino. The coffee was smooth, fresh and perfectly balanced.”</p>
+            <div class="testimonial-author">— Ayesha</div>
+          </div>
+          <div class="testimonial-slide">
+            <div class="stars">★★★★★</div>
+            <p>“Beautiful atmosphere and delicious coffee. One of my favorite places to relax.”</p>
+            <div class="testimonial-author">— Hamza</div>
+          </div>
+          <div class="testimonial-slide">
+            <div class="stars">★★★★★</div>
+            <p>“The caramel latte is amazing! Everything feels carefully prepared.”</p>
+            <div class="testimonial-author">— Hira</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-nav">
+        <button class="t-arrow" id="tPrev" aria-label="Previous review">←</button>
+        <div class="t-dots" id="tDots"></div>
+        <button class="t-arrow" id="tNext" aria-label="Next review">→</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     SPECIAL OFFER
+========================================================= -->
+<section class="offer">
+  <div class="container offer-inner reveal">
+    <div class="eyebrow">Welcome Offer</div>
+    <h2>Your First Cup Is Special</h2>
+    <p>Enjoy 15% OFF your first order and discover your new favorite coffee.</p>
+    <button class="btn btn-light claim-btn">Claim Your Offer</button>
+    <small>Limited-time welcome offer.</small>
+  </div>
+</section>
+
+<!-- =========================================================
+     CONTACT
+========================================================= -->
+<section class="contact" id="contact">
+  <div class="container contact-grid">
+    <div class="contact-info reveal">
+      <div class="eyebrow">Visit Us</div>
+      <h2 class="section-title">Come Have A Cup With Us</h2>
+
+      <div class="contact-info-list">
+        <div class="info-item">
+          <span class="ico">📍</span>
+          <div><h4>Location</h4><p>Islamabad, Pakistan</p></div>
+        </div>
+        <div class="info-item">
+          <span class="ico">🕐</span>
+          <div><h4>Opening Hours</h4><p>Monday – Sunday<br>9:00 AM – 11:00 PM</p></div>
+        </div>
+        <div class="info-item">
+          <span class="ico">📞</span>
+          <div><h4>Phone</h4><p><a href="tel:+923001234567">+92 300 1234567</a></p></div>
+        </div>
+        <div class="info-item">
+          <span class="ico">✉️</span>
+          <div><h4>Email</h4><p><a href="mailto:hello@onecupofcoffee.com">hello@onecupofcoffee.com</a></p></div>
+        </div>
+      </div>
+
+      <a href="https://maps.google.com/?q=Islamabad,Pakistan" target="_blank" rel="noopener" class="btn btn-outline btn-sm" style="margin-top:30px;">Get Directions</a>
+    </div>
+
+    <form class="contact-form reveal reveal-delay-1" id="contactForm" novalidate>
+      <div class="form-row">
+        <div class="field" id="field-name">
+          <label for="cf-name">Name</label>
+          <input type="text" id="cf-name" name="name" placeholder="Your full name">
+          <span class="error-msg">Please enter your name.</span>
+        </div>
+        <div class="field" id="field-email">
+          <label for="cf-email">Email</label>
+          <input type="email" id="cf-email" name="email" placeholder="you@example.com">
+          <span class="error-msg">Please enter a valid email.</span>
+        </div>
+      </div>
+      <div class="field" id="field-phone">
+        <label for="cf-phone">Phone</label>
+        <input type="tel" id="cf-phone" name="phone" placeholder="+92 3XX XXXXXXX">
+        <span class="error-msg">Please enter a valid phone number.</span>
+      </div>
+      <div class="field" id="field-message">
+        <label for="cf-message">Message</label>
+        <textarea id="cf-message" name="message" placeholder="Tell us how we can help..."></textarea>
+        <span class="error-msg">Please write a short message.</span>
+      </div>
+
+      <button type="submit" class="btn btn-primary" style="width:100%;">Send Message</button>
+      <div class="form-status" id="formStatus"></div>
+    </form>
+  </div>
+</section>
+
+<!-- =========================================================
+     NEWSLETTER
+========================================================= -->
+<section class="newsletter">
+  <div class="container reveal">
+    <h2>Stay In The Loop</h2>
+    <p>Get our latest offers, new drinks and café updates straight to your inbox.</p>
+    <form class="newsletter-form" id="newsletterForm" novalidate>
+      <input type="email" id="newsletterEmail" placeholder="Enter your email" required>
+      <button type="submit" class="btn btn-light">Subscribe</button>
+    </form>
+    <div class="newsletter-msg" id="newsletterMsg">Thank you for subscribing! ☕</div>
+  </div>
+</section>
+
+<!-- =========================================================
+     FOOTER
+========================================================= -->
+<footer id="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="#home" class="logo">
+          <span class="logo-icon">☕</span>
+          <span class="logo-text">ONE CUP OF COFFEE</span>
+        </a>
+        <p class="tag">“One Cup. One Moment. One Story.”</p>
+        <p class="desc">A warm corner in the city, where every cup is brewed with intention and served with care.</p>
+        <div class="social-row" style="margin-top:24px;">
+          <a href="#" aria-label="Instagram">IG</a>
+          <a href="#" aria-label="Facebook">FB</a>
+          <a href="#" aria-label="TikTok">TT</a>
+          <a href="#" aria-label="WhatsApp">WA</a>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h4>Explore</h4>
+        <ul>
+          <li><a href="#home">Home</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#menu">Menu</a></li>
+          <li><a href="#gallery">Gallery</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Visit</h4>
+        <ul>
+          <li>Islamabad, Pakistan</li>
+          <li>Mon – Sun, 9AM – 11PM</li>
+          <li><a href="tel:+923001234567">+92 300 1234567</a></li>
+          <li><a href="mailto:hello@onecupofcoffee.com">hello@onecupofcoffee.com</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      © 2026 One Cup of Coffee. All Rights Reserved.
+    </div>
+  </div>
+</footer>
+
+<!-- Back to top -->
+<button class="back-to-top" id="backToTop" aria-label="Back to top">↑</button>
+
+<!-- Toast -->
+<div class="toast" id="toast">☕ <span id="toastText">Added to your order!</span></div>
+
+<script>
+/* =========================================================
+   ONE CUP OF COFFEE — SITE SCRIPT
+   All interactivity for the single-page site lives here.
+========================================================= */
+document.addEventListener('DOMContentLoaded', () => {
+
+  /* ---------- 1. NAVBAR SCROLL STATE ---------- */
+  const navbar = document.getElementById('navbar');
+  const backToTop = document.getElementById('backToTop');
+
+  const onScroll = () => {
+    if (window.scrollY > 40) {
+      navbar.classList.add('scrolled');
+    } else {
+      navbar.classList.remove('scrolled');
+    }
+    backToTop.classList.toggle('show', window.scrollY > 500);
+  };
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  /* ---------- 2. MOBILE HAMBURGER MENU ---------- */
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobileMenu');
+
+  const closeMobileMenu = () => {
+    hamburger.classList.remove('open');
+    mobileMenu.classList.remove('open');
+    document.body.style.overflow = '';
+  };
+
+  hamburger.addEventListener('click', () => {
+    const isOpen = mobileMenu.classList.toggle('open');
+    hamburger.classList.toggle('open', isOpen);
+    document.body.style.overflow = isOpen ? 'hidden' : '';
+  });
+
+  mobileMenu.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', closeMobileMenu);
+  });
+
+  /* ---------- 3. SMOOTH SCROLL (with fixed header offset) ---------- */
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+      const targetId = this.getAttribute('href');
+      if (targetId.length < 2) return;
+      const target = document.querySelector(targetId);
+      if (!target) return;
+      e.preventDefault();
+      const offset = 80;
+      const top = target.getBoundingClientRect().top + window.pageYOffset - offset;
+      window.scrollTo({ top, behavior: 'smooth' });
+    });
+  });
+
+  /* ---------- 4. ACTIVE NAV LINK ON SCROLL ---------- */
+  const sections = document.querySelectorAll('section[id]');
+  const navAnchors = document.querySelectorAll('.nav-links a');
+
+  const setActiveLink = () => {
+    let current = '';
+    const scrollPos = window.scrollY + 140;
+    sections.forEach(sec => {
+      if (scrollPos >= sec.offsetTop && scrollPos < sec.offsetTop + sec.offsetHeight) {
+        current = sec.getAttribute('id');
+      }
+    });
+    navAnchors.forEach(a => {
+      a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+    });
+  };
+  window.addEventListener('scroll', setActiveLink, { passive: true });
+  setActiveLink();
+
+  /* ---------- 5. SCROLL REVEAL ANIMATIONS ---------- */
+  const revealEls = document.querySelectorAll('.reveal');
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('in-view');
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
+  revealEls.forEach(el => revealObserver.observe(el));
+
+  /* ---------- 6. MENU CATEGORY FILTERING ---------- */
+  const filterBtns = document.querySelectorAll('.filter-btn');
+  const menuItems = document.querySelectorAll('.menu-item');
+  const menuCategoryBlocks = document.querySelectorAll('.menu-category');
+
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filterBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const filter = btn.dataset.filter;
+
+      menuItems.forEach(item => {
+        const match = filter === 'all' || item.dataset.cat === filter;
+        item.classList.toggle('hidden', !match);
+      });
+
+      // Hide whole category heading if nothing in it is visible
+      menuCategoryBlocks.forEach(block => {
+        const visibleCount = block.querySelectorAll('.menu-item:not(.hidden)').length;
+        block.style.display = visibleCount === 0 ? 'none' : '';
+      });
+    });
+  });
+
+  /* ---------- 7. TESTIMONIAL SLIDER ---------- */
+  const slidesTrack = document.getElementById('testimonialSlides');
+  const slides = slidesTrack.children;
+  const dotsWrap = document.getElementById('tDots');
+  const prevBtn = document.getElementById('tPrev');
+  const nextBtn = document.getElementById('tNext');
+  let current = 0;
+  let autoTimer;
+
+  for (let i = 0; i < slides.length; i++) {
+    const dot = document.createElement('span');
+    dot.className = 't-dot' + (i === 0 ? ' active' : '');
+    dot.addEventListener('click', () => goToSlide(i));
+    dotsWrap.appendChild(dot);
+  }
+  const dots = dotsWrap.children;
+
+  function goToSlide(index) {
+    current = (index + slides.length) % slides.length;
+    slidesTrack.style.transform = `translateX(-${current * 100}%)`;
+    Array.from(dots).forEach((d, i) => d.classList.toggle('active', i === current));
+    resetAutoplay();
+  }
+
+  function resetAutoplay() {
+    clearInterval(autoTimer);
+    autoTimer = setInterval(() => goToSlide(current + 1), 5500);
+  }
+
+  prevBtn.addEventListener('click', () => goToSlide(current - 1));
+  nextBtn.addEventListener('click', () => goToSlide(current + 1));
+  resetAutoplay();
+
+  /* ---------- 8. CONTACT FORM VALIDATION ---------- */
+  const contactForm = document.getElementById('contactForm');
+  const formStatus = document.getElementById('formStatus');
+
+  const validators = {
+    name: v => v.trim().length >= 2,
+    email: v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim()),
+    phone: v => /^[0-9+\-\s()]{7,}$/.test(v.trim()),
+    message: v => v.trim().length >= 8
+  };
+
+  function validateField(input) {
+    const fieldWrap = document.getElementById('field-' + input.name);
+    const isValid = validators[input.name](input.value);
+    fieldWrap.classList.toggle('error', !isValid);
+    return isValid;
+  }
+
+  contactForm.querySelectorAll('input, textarea').forEach(input => {
+    input.addEventListener('blur', () => validateField(input));
+    input.addEventListener('input', () => {
+      const fieldWrap = document.getElementById('field-' + input.name);
+      if (fieldWrap.classList.contains('error')) validateField(input);
+    });
+  });
+
+  contactForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const inputs = contactForm.querySelectorAll('input, textarea');
+    let allValid = true;
+    inputs.forEach(input => {
+      if (!validateField(input)) allValid = false;
+    });
+
+    formStatus.classList.remove('show', 'success', 'fail');
+
+    if (allValid) {
+      formStatus.textContent = "Thank you! Your message has been sent. We'll get back to you shortly.";
+      formStatus.classList.add('show', 'success');
+      contactForm.reset();
+      showToast('Message sent successfully!');
+    } else {
+      formStatus.textContent = 'Please fix the highlighted fields and try again.';
+      formStatus.classList.add('show', 'fail');
+    }
+  });
+
+  /* ---------- 9. NEWSLETTER VALIDATION ---------- */
+  const newsletterForm = document.getElementById('newsletterForm');
+  const newsletterMsg = document.getElementById('newsletterMsg');
+  const newsletterEmail = document.getElementById('newsletterEmail');
+
+  newsletterForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const valid = validators.email(newsletterEmail.value);
+    if (valid) {
+      newsletterMsg.textContent = 'Thank you for subscribing! ☕';
+      newsletterMsg.classList.add('show');
+      newsletterForm.reset();
+    } else {
+      newsletterMsg.textContent = 'Please enter a valid email address.';
+      newsletterMsg.classList.add('show');
+    }
+    setTimeout(() => newsletterMsg.classList.remove('show'), 4000);
+  });
+
+  /* ---------- 10. BACK TO TOP ---------- */
+  backToTop.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  /* ---------- 11. ORDER / CLAIM BUTTON MICRO-INTERACTIONS ---------- */
+  const toast = document.getElementById('toast');
+  const toastText = document.getElementById('toastText');
+  let toastTimer;
+
+  function showToast(message) {
+    toastText.textContent = message;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => toast.classList.remove('show'), 3200);
+  }
+
+  document.querySelectorAll('.order-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      // Let the "Order Now" nav/menu links still scroll to the menu section
+      if (btn.tagName === 'A') return;
+      e.preventDefault();
+      showToast('Order started — see you soon!');
+    });
+  });
+
+  document.querySelector('.claim-btn')?.addEventListener('click', () => {
+    showToast('15% OFF unlocked — enjoy your first cup!');
+  });
+
+  /* ---------- 12. IMAGE LAZY LOADING (native + fallback fade-in) ---------- */
+  const lazyImgs = document.querySelectorAll('img[loading="lazy"]');
+  lazyImgs.forEach(img => {
+    img.style.opacity = 0;
+    img.style.transition = 'opacity .6s ease';
+    if (img.complete) {
+      img.style.opacity = 1;
+    } else {
+      img.addEventListener('load', () => { img.style.opacity = 1; });
+    }
+  });
+
+});
+</script>
+</body>
+</html>
